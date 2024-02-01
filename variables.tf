@@ -1,7 +1,7 @@
 variable "vmname" {
   description = "VM vm name"
   type        = string
-  default     = "VM"
+  default     = "mongodb_01"
 }
 
 variable "poolpath" {
