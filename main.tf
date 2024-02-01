@@ -1,19 +1,19 @@
 resource "libvirt_pool" "VM" {
-  name = var.dbname
+  name = var.vmname
   type = "dir"
   path = var.poolpath
 }
 
 # Defining VM Volume
 resource "libvirt_volume" "VM-master-qcow2" {
-  name   = "${var.dbname}-master.qcow2"
+  name   = "${var.vmname}-master.qcow2"
   pool   = libvirt_pool.VM.name
   source = var.remote_iso
   format = "qcow2"
 }
 
 resource "libvirt_volume" "VM-worker-qcow2" {
-  name           = "${var.dbname}-worker.qcow2"
+  name           = "${var.vmname}-worker.qcow2"
   base_volume_id = libvirt_volume.VM-master-qcow2.id
   pool           = libvirt_pool.VM.name
   size           = 10737418240
@@ -21,7 +21,7 @@ resource "libvirt_volume" "VM-worker-qcow2" {
 
 # Defining Virtual Machine
 resource "libvirt_domain" "VM" {
-  name   = "${var.dbname}-vm"
+  name   = "${var.vmname}-vm"
   memory = "2048"
   vcpu   = 2
 

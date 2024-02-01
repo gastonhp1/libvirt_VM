@@ -1,0 +1,23 @@
+# IntelliJ IDEA
+.idea/
+
+# Terraform
+*.tfstate
+*.tfstate.backup
+*.tfvars
+.terraform/
+
+# Compiled binary plugins
+*.zip
+
+# Override any other .gitignore rules you need here
+
+# Ignored files when working with Terraform
+terraform.tfstate
+terraform.tfstate.backup
+
+# Local .terraform directories
+**/.terraform/
+
+# Crash log files
+crash.log

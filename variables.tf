@@ -1,4 +1,4 @@
-variable "dbname" {
+variable "vmname" {
   description = "VM vm name"
   type        = string
   default     = "VM"
@@ -38,14 +38,4 @@ variable "password" {
   description = "Password"
   type        = string
   default     = "Pass.123!"
-}
-
-variable "VM_instances" {
-  description = "List of VM instance variables"
-  type = list(object({
-    id              = number
-    port            = number
-    data_dir        = string
-    config_template = string
-  }))
 }
