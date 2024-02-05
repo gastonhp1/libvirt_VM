@@ -39,3 +39,9 @@ variable "password" {
   type        = string
   default     = "Pass.123!"
 }
+
+variable "build_id" {
+  description = "Build ID for the VM name"
+  type        = string
+}
+
