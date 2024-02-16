@@ -1,13 +1,13 @@
 variable "vmname" {
   description = "VM vm name"
   type        = string
-  default     = "mongodb_01"
+  default     = "vm-ubuntu"
 }
 
 variable "poolpath" {
   description = "The path where the libvirt pool is located"
   type        = string
-  default     = "/var/kvm/VM"
+  default     = "/var/kvm/virtual-machines"
 }
 
 variable "remote_iso" {
@@ -31,7 +31,7 @@ variable "vcpu" {
 variable "ssh_username" {
   description = "User"
   type        = string
-  default     = "gastonhp1"
+  default     = "ubuntu"
 }
 
 variable "password" {
@@ -41,7 +41,7 @@ variable "password" {
 }
 
 variable "build_id" {
-  description = "Build ID for the VM name"
+  description = "Jenkins Build ID"
   type        = string
 }
 
