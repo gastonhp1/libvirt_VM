@@ -17,13 +17,13 @@ variable "remote_iso" {
 }
 
 variable "mem" {
-  description = "VM vm memory size"
+  description = "node node memory size"
   type        = string
   default     = "2048"
 }
 
 variable "vcpu" {
-  description = "VM vm vcpus"
+  description = "node node vcpus"
   type        = number
   default     = 4
 }

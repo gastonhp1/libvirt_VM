@@ -1,31 +1,31 @@
-resource "libvirt_pool" "VM" {
+resource "libvirt_pool" "node" {
   name = var.vmname
   type = "dir"
   path = var.poolpath
 }
 
 # Defining VM Volume
-resource "libvirt_volume" "VM-master-qcow2" {
-  name   = "${var.vmname}-master.qcow2"
-  pool   = libvirt_pool.VM.name
+resource "libvirt_volume" "node-master-qcow2" {
+  name   = "vol-${var.vmname}-master.qcow2"
+  pool   = libvirt_pool.node.name
   source = var.remote_iso
   format = "qcow2"
 }
 
-resource "libvirt_volume" "VM-worker-qcow2" {
-  name           = "${var.vmname}-worker.qcow2"
-  base_volume_id = libvirt_volume.VM-master-qcow2.id
-  pool           = libvirt_pool.VM.name
+resource "libvirt_volume" "node-worker-qcow2" {
+  name           = "vol-${var.vmname}-worker.qcow2"
+  base_volume_id = libvirt_volume.node-master-qcow2.id
+  pool           = libvirt_pool.node.name
   size           = 10737418240
 }
 
 # Defining Virtual Machine
-resource "libvirt_domain" "VM" {
-  name   = "${var.vmname}-vm"
+resource "libvirt_domain" "node" {
+  name   = "${var.vmname}"
   memory = "2048"
   vcpu   = 2
 
-  cloudinit = libvirt_cloudinit_disk.VM-init.id
+  cloudinit = libvirt_cloudinit_disk.node-init.id
 
   network_interface {
     network_name   = "default"
@@ -33,7 +33,7 @@ resource "libvirt_domain" "VM" {
   }
 
   disk {
-    volume_id = libvirt_volume.VM-worker-qcow2.id
+    volume_id = libvirt_volume.node-worker-qcow2.id
   }
 
   console {
@@ -52,7 +52,7 @@ resource "libvirt_domain" "VM" {
     type     = "ssh"
     user     = var.ssh_username
     password = var.password
-    host     = libvirt_domain.VM.network_interface[0].addresses[0]
+    host     = libvirt_domain.node.network_interface[0].addresses[0]
   }
 }
 
@@ -60,8 +60,8 @@ data "template_file" "user_data" {
   template = file("config/cloud_init.yml")
 }
 
-resource "libvirt_cloudinit_disk" "VM-init" {
-  name      = "VM-init.iso"
+resource "libvirt_cloudinit_disk" "node-init" {
+  name      = "node-init.iso"
   user_data = data.template_file.user_data.rendered
-  pool      = libvirt_pool.VM.name
+  pool      = libvirt_pool.node.name
 }
