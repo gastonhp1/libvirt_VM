@@ -1,5 +1,5 @@
 variable "vmname" {
-  description = "VM vm name"
+  description = "VM name"
   type        = string
   default     = "vm-ubuntu"
 }
